@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import {getContext} from "@vercel/functions/get-context";
  
 type ResponseData = {
   hasContext: boolean
 }
  
 export default function handler(
-  req: NextApiRequest,
+  _: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
- // @ts-ignore
-  res.status(200).json({ hasContext: !!globalThis[Symbol.for('@vercel/request-context')]?.get() })
+  res.status(200).json({ hasContext: !!getContext()?.waitUntil })
 }
